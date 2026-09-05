@@ -1,26 +1,20 @@
 import Link from "next/link";
 
-interface NavItems {
-    href: string;
-    label: string;
+interface NavItem {
+  href: string;
+  label: string;
 }
 
-const navItems: NavItems[] = [
-    {
-    href: "/photo",
-    label: "Photos",
-},
-    {
+const navItems: NavItem[] = [
+  {
     href: "/about",
     label: "About Us",
-},
-    {
+  },
+  {
     href: "/contact",
     label: "Contact Us",
-},
+  },
 ];
-
-
 
 const NavItem = ({ onNavigate }: { onNavigate?: () => void }) => {
   return (

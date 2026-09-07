@@ -22,9 +22,9 @@ const HeroSection = () => {
       {/* Upload Button */}
       <button
         type="button"
-        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-slate-700 px-6 py-2.5 font-bold text-white shadow-md transition-all duration-150 hover:bg-slate-950 active:translate-y-0.5 sm:w-auto whitespace-nowrap"
+        className="flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-slate-700 px-6 py-2.5 font-bold text-white shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-slate-900 hover:shadow-lg hover:shadow-slate-900/25 active:translate-y-0 active:scale-95 sm:w-auto whitespace-nowrap"
       >
-        <FaUpload />
+        <FaUpload className="text-sm" />
         <span>UPLOAD</span>
       </button>
     </div>

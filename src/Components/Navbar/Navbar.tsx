@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import NavItem from "./NavItem";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,9 +23,16 @@ const Navbar = () => {
           aria-expanded={isOpen}
           aria-label="Toggle navigation menu"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded border-2 border-slate-900 text-2xl font-bold transition hover:bg-slate-900 hover:text-white md:hidden"
+          className="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl border-2 border-slate-900 text-2xl font-bold transition-all duration-200 hover:bg-slate-900 hover:text-white active:scale-95 md:hidden"
         >
-          <span aria-hidden>{isOpen ? "×" : "☰"}</span>
+          <span
+            className={`flex h-full w-full items-center justify-center transition-transform duration-300 ${
+              isOpen ? "rotate-180 scale-110" : "rotate-0"
+            }`}
+            aria-hidden
+          >
+            {isOpen ? <FaTimes /> : <FaBars />}
+          </span>
         </button>
 
         <div className="hidden md:block">
@@ -33,10 +41,16 @@ const Navbar = () => {
       </div>
 
       <div
-        className={`md:hidden ${isOpen ? "mt-4 block" : "hidden"}`}
+        className={`grid overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+          isOpen
+            ? "grid-rows-[1fr] opacity-100 mt-4"
+            : "grid-rows-[0fr] opacity-0 mt-0 pointer-events-none"
+        }`}
       >
-        <div className="flex flex-col gap-2 rounded border border-slate-200 p-3 shadow-sm">
-          <NavItem onNavigate={() => setIsOpen(false)} />
+        <div className="min-h-0 overflow-hidden">
+          <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur-sm">
+            <NavItem onNavigate={() => setIsOpen(false)} />
+          </div>
         </div>
       </div>
     </nav>

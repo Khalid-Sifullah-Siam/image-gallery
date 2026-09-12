@@ -20,17 +20,17 @@ const contactMethods = [
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fefce8_0%,_#f8fafc_38%,_#ffffff_100%)] px-4 py-6 text-slate-900 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl rounded-[2rem] border border-slate-200 bg-white/85 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur sm:p-8 lg:p-10">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fefce8_0%,_#f8fafc_38%,_#ffffff_100%)] px-3 py-4 text-slate-900 sm:px-6 sm:py-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl rounded-2xl sm:rounded-[2rem] border border-slate-200 bg-white/85 p-4 sm:p-8 lg:p-10 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur">
         <Navbar />
 
         <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="space-y-6">
-            <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-4 py-1 text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">
+            <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3.5 py-1 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">
               Contact us
             </span>
             <div className="space-y-4">
-              <h1 className="max-w-xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-xl text-3xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
                 Let&apos;s talk about your next gallery or project.
               </h1>
               <p className="max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
@@ -61,7 +61,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <form className="rounded-[1.75rem] border border-slate-200 bg-slate-950 p-6 text-white shadow-2xl sm:p-8">
+          <form className="rounded-2xl sm:rounded-[1.75rem] border border-slate-200 bg-slate-950 p-4 sm:p-8 text-white shadow-2xl">
             <div className="grid gap-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="grid gap-2 text-sm font-medium">

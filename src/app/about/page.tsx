@@ -20,17 +20,17 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#ecfeff_0%,_#f8fafc_35%,_#ffffff_100%)] px-4 py-6 text-slate-900 sm:px-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl rounded-[2rem] border border-slate-200 bg-white/80 p-5 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur sm:p-8 lg:p-10">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#ecfeff_0%,_#f8fafc_35%,_#ffffff_100%)] px-3 py-4 text-slate-900 sm:px-6 sm:py-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl rounded-2xl sm:rounded-[2rem] border border-slate-200 bg-white/80 p-4 sm:p-8 lg:p-10 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur">
         <Navbar />
 
         <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div className="space-y-6">
-            <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1 text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+            <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
               About us
             </span>
             <div className="space-y-4">
-              <h1 className="max-w-2xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-2xl text-3xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
                 A gallery built to make photography feel premium and simple.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
@@ -40,7 +40,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
               {[
                 ["100%", "Responsive"],
                 ["Fast", "Browsing"],

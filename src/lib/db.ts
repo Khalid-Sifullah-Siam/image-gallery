@@ -1,4 +1,4 @@
-import { ImageInfo } from "@/types/index.d";
+import { ImageInfo } from "@/types";
 
 export const imagesData: ImageInfo[] = [
     {

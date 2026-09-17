@@ -56,7 +56,7 @@ export default function ContactPage() {
                   href={method.href}
                   whileHover={{ y: -3, scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 dark:bg-slate-800/90 px-4 py-4 shadow-sm transition-colors hover:border-emerald-300 dark:hover:border-emerald-400 hover:shadow-md cursor-pointer"
+                  className="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/90 px-4 py-4 shadow-sm transition-colors hover:border-emerald-300 dark:hover:border-emerald-400 hover:shadow-md cursor-pointer"
                 >
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">

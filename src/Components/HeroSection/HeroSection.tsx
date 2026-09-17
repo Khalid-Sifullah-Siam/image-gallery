@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import HeroSearchBar from "./HeroSearchBar";
 import UploadModal from "../UploadModal/UploadModal";
-import { ImageInfo } from "@/types/index.d";
+import { ImageInfo } from "@/types";
 
 interface HeroSectionProps {
   searchQuery?: string;

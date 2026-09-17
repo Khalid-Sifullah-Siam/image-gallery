@@ -6,7 +6,8 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaHeart, FaShareAlt, FaDownload, FaTags, FaSpinner, FaCheck, FaTrash } from "react-icons/fa";
 import { FiBookmark } from "react-icons/fi";
-import { ImageInfo } from "@/types/index.d";
+import { useIsMounted } from "@/hooks/useIsMounted";
+import { ImageInfo } from "@/types";
 
 interface PhotoModalProps {
   image: ImageInfo | null;
@@ -27,13 +28,9 @@ const PhotoModal = ({
   onToggleBookmark,
   onDelete,
 }: PhotoModalProps) => {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsMounted();
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleDownload = async () => {
     if (!image || isDownloading) return;

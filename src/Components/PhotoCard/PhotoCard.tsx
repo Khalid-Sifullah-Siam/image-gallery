@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaHeart, FaExpandAlt, FaDownload, FaCheck, FaSpinner, FaTrash } from "react-icons/fa";
 import { FiBookmark } from "react-icons/fi";
-import { ImageInfo } from "../../types/index.d";
+import { ImageInfo } from "@/types";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80";
@@ -90,6 +90,7 @@ const PhotoCard = ({
         onLoad={() => setImgLoaded(true)}
         width={600}
         height={600}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
         className={`w-full h-full object-cover group-hover:scale-108 transition-all duration-700 ease-out ${
           imgLoaded ? "opacity-100" : "opacity-0"
         }`}

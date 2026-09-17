@@ -3,12 +3,12 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { imagesData } from "@/lib/db";
-import PhotoCard from "../PhotoCard.tsx/PhotoCard";
+import PhotoCard from "../PhotoCard/PhotoCard";
 import PhotoModal from "../PhotoModal/PhotoModal";
 import ActiveFiltersBar from "./ActiveFiltersBar";
 import EmptyGalleryState from "./EmptyGalleryState";
 import Pagination from "./Pagination";
-import { ImageInfo } from "@/types/index.d";
+import { ImageInfo } from "@/types";
 
 const ITEMS_PER_PAGE = 6;
 

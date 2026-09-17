@@ -15,7 +15,7 @@ import {
   FaExclamationCircle,
 } from "react-icons/fa";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import { ImageInfo } from "@/types/index.d";
+import { ImageInfo } from "@/types";
 
 interface UploadModalProps {
   isOpen: boolean;

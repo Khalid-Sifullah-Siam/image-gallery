@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { imagesData } from "@/lib/db";
-import { ImageInfo } from "@/types/index.d";
+import { ImageInfo } from "@/types";
 
 const dedupeImages = (list: ImageInfo[]): ImageInfo[] => {
   const seen = new Set<number>();

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { FaHome, FaInfoCircle, FaEnvelope } from "react-icons/fa";
 
 interface NavLinkItem {
@@ -27,8 +28,6 @@ const navItems: NavLinkItem[] = [
     icon: FaEnvelope,
   },
 ];
-
-import { motion } from "framer-motion";
 
 const NavItem = ({ onNavigate }: { onNavigate?: () => void }) => {
   const pathname = usePathname();

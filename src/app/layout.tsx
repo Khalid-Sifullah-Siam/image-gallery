@@ -14,8 +14,44 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Image Gallery",
-  description: "Created by Khalid Sifullah Siam",
+  metadataBase: new URL("https://image-gallery-zeta-amber.vercel.app"),
+  title: {
+    default: "Image Gallery — Curated Visual Inspiration",
+    template: "%s | Image Gallery",
+  },
+  description:
+    "Explore, search, filter, and download high-resolution photography and vector artwork. Fast, responsive, and beautifully modern.",
+  keywords: [
+    "image gallery",
+    "photos",
+    "vectors",
+    "photography",
+    "creative visuals",
+    "next.js",
+    "tailwind css",
+    "react",
+  ],
+  authors: [{ name: "Khalid Sifullah Siam" }],
+  creator: "Khalid Sifullah Siam",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://image-gallery-zeta-amber.vercel.app",
+    siteName: "Image Gallery",
+    title: "Image Gallery — Curated Visual Inspiration",
+    description:
+      "Explore, search, filter, and download high-resolution photography and vector artwork.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Image Gallery — Curated Visual Inspiration",
+    description:
+      "Explore, search, filter, and download high-resolution photography and vector artwork.",
+    creator: "@khalidsifullah",
+  },
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

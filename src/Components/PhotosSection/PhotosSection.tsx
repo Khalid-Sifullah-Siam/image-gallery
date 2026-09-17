@@ -71,10 +71,15 @@ const PhotosSection = ({
     });
   }, [allImages, searchQuery, activeFilter]);
 
-  // Reset to page 1 whenever filters change
-  useMemo(() => {
+  // Reset to page 1 whenever filters change (adjusting state during render per React guidelines)
+  const [prevSearch, setPrevSearch] = useState<string>(searchQuery);
+  const [prevFilter, setPrevFilter] = useState<string>(activeFilter);
+
+  if (searchQuery !== prevSearch || activeFilter !== prevFilter) {
+    setPrevSearch(searchQuery);
+    setPrevFilter(activeFilter);
     setCurrentPage(1);
-  }, [searchQuery, activeFilter]);
+  }
 
   const totalPages = Math.ceil(filteredImages.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;

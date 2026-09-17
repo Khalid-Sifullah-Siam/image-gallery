@@ -144,3 +144,4 @@ const HeroSearchBar = ({
 };
 
 export default HeroSearchBar;
+

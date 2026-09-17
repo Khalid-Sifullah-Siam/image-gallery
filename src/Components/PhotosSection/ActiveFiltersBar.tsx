@@ -137,3 +137,4 @@ const ActiveFiltersBar = ({
 };
 
 export default ActiveFiltersBar;
+

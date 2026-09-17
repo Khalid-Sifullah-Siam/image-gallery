@@ -2,17 +2,13 @@
 
 import { useTheme } from "@/context/ThemeContext";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 import { motion, AnimatePresence } from "framer-motion";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useIsMounted();
 
   if (!mounted) {
     return (

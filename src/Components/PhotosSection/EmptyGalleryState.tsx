@@ -39,3 +39,4 @@ const EmptyGalleryState = ({ onResetFilters }: EmptyGalleryStateProps) => {
 };
 
 export default EmptyGalleryState;
+

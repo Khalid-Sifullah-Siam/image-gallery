@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,6 +14,7 @@ import {
   FaCheck,
   FaExclamationCircle,
 } from "react-icons/fa";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import { ImageInfo } from "@/types/index.d";
 
 interface UploadModalProps {
@@ -23,7 +24,7 @@ interface UploadModalProps {
 }
 
 const UploadModal = ({ isOpen, onClose, onUploadImage }: UploadModalProps) => {
-  const [mounted, setMounted] = useState<boolean>(false);
+  const mounted = useIsMounted();
   const [uploadMode, setUploadMode] = useState<"file" | "url">("file");
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
@@ -35,11 +36,7 @@ const UploadModal = ({ isOpen, onClose, onUploadImage }: UploadModalProps) => {
   const [formError, setFormError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const resetUploadForm = () => {
+  const resetUploadForm = useCallback(() => {
     setUploadFile(null);
     setPreviewUrl("");
     setUrlInput("");
@@ -48,12 +45,12 @@ const UploadModal = ({ isOpen, onClose, onUploadImage }: UploadModalProps) => {
     setFormError("");
     setUploadSuccess(false);
     setIsDragging(false);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     resetUploadForm();
     onClose();
-  };
+  }, [resetUploadForm, onClose]);
 
   const processFile = (file: File) => {
     if (!file.type.startsWith("image/")) {
@@ -150,7 +147,7 @@ const UploadModal = ({ isOpen, onClose, onUploadImage }: UploadModalProps) => {
         window.removeEventListener("keydown", handleEscape);
       };
     }
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
 
   if (!mounted) return null;
 
@@ -447,3 +444,4 @@ const UploadModal = ({ isOpen, onClose, onUploadImage }: UploadModalProps) => {
 };
 
 export default UploadModal;
+

@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaChevronLeft, FaChevronRight, FaSearchPlus, FaTimes } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaSearchPlus, FaTimes, FaShareAlt, FaCheck } from "react-icons/fa";
 import { imagesData } from "@/lib/db";
 import PhotoCard from "../PhotoCard.tsx/PhotoCard";
 import PhotoModal from "../PhotoModal/PhotoModal";
@@ -14,6 +14,8 @@ interface PhotosSectionProps {
   images?: ImageInfo[];
   searchQuery?: string;
   activeFilter?: string;
+  onSearchChange?: (query: string) => void;
+  onFilterChange?: (filter: string) => void;
   onDeleteImage?: (id: number) => void;
   onResetFilters?: () => void;
 }
@@ -22,6 +24,8 @@ const PhotosSection = ({
   images,
   searchQuery = "",
   activeFilter = "",
+  onSearchChange,
+  onFilterChange,
   onDeleteImage,
   onResetFilters,
 }: PhotosSectionProps) => {
@@ -29,6 +33,7 @@ const PhotosSection = ({
   const [previewImage, setPreviewImage] = useState<ImageInfo | null>(null);
   const [likedIds, setLikedIds] = useState<Set<number>>(new Set());
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<number>>(new Set());
+  const [copiedLink, setCopiedLink] = useState<boolean>(false);
 
   // Guarantee unique IDs across all images to prevent duplicate React keys
   const allImages = useMemo(() => {
@@ -105,6 +110,18 @@ const PhotosSection = ({
     });
   };
 
+  const handleCopyShareLink = async () => {
+    try {
+      if (typeof window !== "undefined") {
+        await navigator.clipboard.writeText(window.location.href);
+        setCopiedLink(true);
+        setTimeout(() => setCopiedLink(false), 2000);
+      }
+    } catch (err) {
+      console.error("Failed to copy link:", err);
+    }
+  };
+
   return (
     <section
       id="photo-gallery-section"
@@ -122,18 +139,59 @@ const PhotosSection = ({
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-1.5"
+              className="flex flex-wrap items-center gap-1.5"
             >
               {searchQuery && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60">
-                  Search: &ldquo;{searchQuery}&rdquo;
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/60">
+                  <span>Search: &ldquo;{searchQuery}&rdquo;</span>
+                  {onSearchChange && (
+                    <button
+                      type="button"
+                      onClick={() => onSearchChange("")}
+                      className="text-indigo-500 hover:text-indigo-800 dark:hover:text-white cursor-pointer ml-0.5"
+                      aria-label="Remove search filter"
+                    >
+                      <FaTimes size={10} />
+                    </button>
+                  )}
                 </span>
               )}
               {activeFilter && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950">
-                  Type: {activeFilter}
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-950">
+                  <span>Type: {activeFilter}</span>
+                  {onFilterChange && (
+                    <button
+                      type="button"
+                      onClick={() => onFilterChange("")}
+                      className="opacity-75 hover:opacity-100 cursor-pointer ml-0.5"
+                      aria-label="Remove category filter"
+                    >
+                      <FaTimes size={10} />
+                    </button>
+                  )}
                 </span>
               )}
+
+              {/* Copy Shareable Link */}
+              <button
+                type="button"
+                onClick={handleCopyShareLink}
+                aria-label="Copy shareable link for current filters"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600 transition-all cursor-pointer shadow-2xs"
+              >
+                {copiedLink ? (
+                  <>
+                    <FaCheck className="text-emerald-600 dark:text-emerald-400 text-[10px]" />
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <FaShareAlt className="text-slate-400 dark:text-slate-400 text-[10px]" />
+                    <span>Share Link</span>
+                  </>
+                )}
+              </button>
+
               {onResetFilters && (
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -144,7 +202,7 @@ const PhotosSection = ({
                   className="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-lg transition-colors cursor-pointer"
                 >
                   <FaTimes size={10} />
-                  <span>Reset</span>
+                  <span>Reset All</span>
                 </motion.button>
               )}
             </motion.div>

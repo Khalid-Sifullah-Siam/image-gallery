@@ -1,23 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback, Suspense } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { Suspense } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/Components/Navbar/Navbar";
 import HeroSection from "@/Components/HeroSection/HeroSection";
 import PhotosSection from "@/Components/PhotosSection/PhotosSection";
 import Footer from "@/Components/Footer/Footer";
-import { imagesData } from "@/lib/db";
-import { ImageInfo } from "@/types/index.d";
-
-const dedupeImages = (list: ImageInfo[]): ImageInfo[] => {
-  const seen = new Set<number>();
-  return list.filter((item) => {
-    if (!item || !item.id || seen.has(item.id)) return false;
-    seen.add(item.id);
-    return true;
-  });
-};
+import { useCustomUploads } from "@/hooks/useCustomUploads";
+import { useGalleryUrlSync } from "@/hooks/useGalleryUrlSync";
 
 function GalleryFallback() {
   return (
@@ -35,128 +25,14 @@ function GalleryFallback() {
 }
 
 function GalleryContent() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const normalizeFilter = useCallback((val: string | null): string => {
-    if (!val) return "";
-    const lower = val.trim().toLowerCase();
-    if (lower === "photo" || lower === "photos") return "Photo";
-    if (lower === "vector" || lower === "vectors") return "Vector";
-    return val.trim();
-  }, []);
-
-  const [images, setImages] = useState<ImageInfo[]>(() => dedupeImages(imagesData));
-
-  // Initialize from searchParams
-  const initialSearch = searchParams.get("search") || searchParams.get("q") || "";
-  const initialFilter = normalizeFilter(searchParams.get("filter") || searchParams.get("category"));
-
-  const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [activeFilter, setActiveFilter] = useState(initialFilter);
-
-  // Sync state if browser Back / Forward buttons are used
-  useEffect(() => {
-    const urlSearch = searchParams.get("search") || searchParams.get("q") || "";
-    const urlFilter = normalizeFilter(searchParams.get("filter") || searchParams.get("category"));
-    setSearchQuery(urlSearch);
-    setActiveFilter(urlFilter);
-  }, [searchParams, normalizeFilter]);
-
-  // Safe URL updater function
-  const updateUrl = useCallback(
-    (newSearch: string, newFilter: string) => {
-      const params = new URLSearchParams();
-      const cleanSearch = newSearch.trim();
-      const cleanFilter = newFilter.trim();
-
-      if (cleanSearch) params.set("search", cleanSearch);
-      if (cleanFilter) params.set("filter", cleanFilter);
-
-      const qs = params.toString();
-      const targetUrl = qs ? `${pathname}?${qs}` : pathname;
-      router.replace(targetUrl, { scroll: false });
-    },
-    [pathname, router]
-  );
-
-  // Debounced URL sync when typing in search input
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const urlSearch = searchParams.get("search") || searchParams.get("q") || "";
-      const urlFilter = normalizeFilter(searchParams.get("filter") || searchParams.get("category"));
-
-      if (searchQuery.trim() !== urlSearch.trim() || activeFilter.trim() !== urlFilter.trim()) {
-        updateUrl(searchQuery, activeFilter);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [searchQuery, activeFilter, searchParams, normalizeFilter, updateUrl]);
-
-  // Load custom uploaded images from localStorage
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("custom_gallery_uploads");
-      if (saved) {
-        const parsed: ImageInfo[] = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const withoutTarget = parsed.filter((item) => item.id !== 1789669569303);
-          const cleaned =
-            withoutTarget.length < parsed.length
-              ? withoutTarget
-              : withoutTarget.slice(1);
-          const uniqueCustom = dedupeImages(cleaned);
-          localStorage.setItem("custom_gallery_uploads", JSON.stringify(uniqueCustom));
-          setImages(dedupeImages([...uniqueCustom, ...imagesData]));
-        }
-      }
-    } catch (err) {
-      console.error("Failed to parse custom uploads:", err);
-    }
-  }, []);
-
-  const handleUploadImage = (newImage: ImageInfo) => {
-    setImages((prev) => dedupeImages([newImage, ...prev]));
-    try {
-      const saved = localStorage.getItem("custom_gallery_uploads");
-      const existing: ImageInfo[] = saved ? JSON.parse(saved) : [];
-      const updatedCustom = dedupeImages([newImage, ...existing]);
-      localStorage.setItem("custom_gallery_uploads", JSON.stringify(updatedCustom));
-    } catch (err) {
-      console.error("Failed to save upload to localStorage:", err);
-    }
-  };
-
-  const handleDeleteImage = (id: number) => {
-    setImages((prev) => prev.filter((img) => img.id !== id));
-    try {
-      const saved = localStorage.getItem("custom_gallery_uploads");
-      if (saved) {
-        const parsed: ImageInfo[] = JSON.parse(saved);
-        const remaining = parsed.filter((item) => item.id !== id);
-        localStorage.setItem("custom_gallery_uploads", JSON.stringify(remaining));
-      }
-    } catch (err) {
-      console.error("Failed to delete image from localStorage:", err);
-    }
-  };
-
-  const handleFilterChange = (filter: string) => {
-    setActiveFilter(filter);
-    updateUrl(searchQuery, filter);
-  };
-
-  const handleSearchChange = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  const handleResetFilters = () => {
-    setSearchQuery("");
-    setActiveFilter("");
-    updateUrl("", "");
-  };
+  const { images, handleUploadImage, handleDeleteImage } = useCustomUploads();
+  const {
+    searchQuery,
+    activeFilter,
+    handleSearchChange,
+    handleFilterChange,
+    handleResetFilters,
+  } = useGalleryUrlSync();
 
   const photosCount = images.filter(
     (item) => item.category.toLowerCase() === "photo"

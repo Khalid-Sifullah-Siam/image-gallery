@@ -42,3 +42,5 @@ next-env.d.ts
 
 # Git Auto Commit Generator learned data
 .git-auto-commit/
+
+.vercel

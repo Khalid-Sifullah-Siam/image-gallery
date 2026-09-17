@@ -163,7 +163,7 @@ GET /api/download?url={IMAGE_URL}&filename={OPTIONAL_FILENAME}
 
 **Khalid Sifullah Siam**
 - GitHub: [@Khalid-Sifullah-Siam](https://github.com/Khalid-Sifullah-Siam)
-- Portfolio / Live App: [image-gallery-zeta-amber.vercel.app](https://image-gallery-zeta-amber.vercel.app)
+- Live Link: [image-gallery-zeta-amber.vercel.app](https://image-gallery-zeta-amber.vercel.app)
 
 ---
 

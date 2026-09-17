@@ -1,4 +1,8 @@
+"use client";
+
+import Footer from "@/Components/Footer/Footer";
 import Navbar from "@/Components/Navbar/Navbar";
+import { motion } from "framer-motion";
 
 const contactMethods = [
   {
@@ -20,20 +24,25 @@ const contactMethods = [
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fefce8_0%,_#f8fafc_38%,_#ffffff_100%)] px-3 py-4 text-slate-900 sm:px-6 sm:py-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl rounded-2xl sm:rounded-[2rem] border border-slate-200 bg-white/85 p-4 sm:p-8 lg:p-10 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur">
+    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-100/60 via-slate-50 to-indigo-100/40 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/40 p-2 sm:p-4 md:p-6 lg:p-8 flex items-center justify-center text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="w-full max-w-7xl mx-auto my-auto p-4 sm:p-7 md:p-10 lg:p-12 bg-white/85 dark:bg-slate-900/80 border border-white/80 dark:border-slate-800/80 rounded-2xl sm:rounded-[2.25rem] shadow-[0_25px_80px_-15px_rgba(15,23,42,0.08)] backdrop-blur-md transition-colors duration-300"
+      >
         <Navbar />
 
         <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="space-y-6">
-            <span className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3.5 py-1 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">
+            <span className="inline-flex rounded-full border border-amber-200 dark:border-amber-800/60 bg-amber-50 dark:bg-amber-950/60 px-3.5 py-1 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-amber-700 dark:text-amber-300">
               Contact us
             </span>
             <div className="space-y-4">
-              <h1 className="max-w-xl text-3xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-xl text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
                 Let&apos;s talk about your next gallery or project.
               </h1>
-              <p className="max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
+              <p className="max-w-xl text-base leading-7 text-slate-600 dark:text-slate-400 sm:text-lg">
                 Reach out for collaborations, custom gallery setups, or any
                 questions about the site. We reply with clear next steps and a
                 simple plan.
@@ -42,21 +51,23 @@ export default function ContactPage() {
 
             <div className="space-y-3">
               {contactMethods.map((method) => (
-                <a
+                <motion.a
                   key={method.label}
                   href={method.href}
-                  className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
+                  whileHover={{ y: -3, scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-between rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 dark:bg-slate-800/90 px-4 py-4 shadow-sm transition-colors hover:border-emerald-300 dark:hover:border-emerald-400 hover:shadow-md cursor-pointer"
                 >
                   <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                       {method.label}
                     </p>
-                    <p className="mt-1 text-lg font-bold text-slate-950">
+                    <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
                       {method.value}
                     </p>
                   </div>
-                  <span className="text-2xl text-emerald-600">→</span>
-                </a>
+                  <span className="text-2xl text-emerald-600 dark:text-emerald-400">→</span>
+                </motion.a>
               ))}
             </div>
           </div>
@@ -100,16 +111,20 @@ export default function ContactPage() {
                 />
               </label>
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.96 }}
                 type="button"
-                className="mt-2 rounded-full bg-emerald-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.2em] text-slate-950 transition hover:bg-emerald-300"
+                className="mt-2 cursor-pointer rounded-full bg-emerald-400 px-6 py-3 text-sm font-bold uppercase tracking-[0.2em] text-slate-950 transition hover:bg-emerald-300"
               >
                 Send message
-              </button>
+              </motion.button>
             </div>
           </form>
         </section>
-      </div>
+
+        <Footer />
+      </motion.div>
     </main>
   );
 }

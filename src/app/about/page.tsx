@@ -1,4 +1,8 @@
+"use client";
+
+import Footer from "@/Components/Footer/Footer";
 import Navbar from "@/Components/Navbar/Navbar";
+import { motion } from "framer-motion";
 
 const values = [
   {
@@ -20,20 +24,25 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#ecfeff_0%,_#f8fafc_35%,_#ffffff_100%)] px-3 py-4 text-slate-900 sm:px-6 sm:py-6 lg:px-8">
-      <div className="mx-auto w-full max-w-6xl rounded-2xl sm:rounded-[2rem] border border-slate-200 bg-white/80 p-4 sm:p-8 lg:p-10 shadow-[0_24px_80px_rgba(15,23,42,0.12)] backdrop-blur">
+    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-100/60 via-slate-50 to-indigo-100/40 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/40 p-2 sm:p-4 md:p-6 lg:p-8 flex items-center justify-center text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="w-full max-w-7xl mx-auto my-auto p-4 sm:p-7 md:p-10 lg:p-12 bg-white/85 dark:bg-slate-900/80 border border-white/80 dark:border-slate-800/80 rounded-2xl sm:rounded-[2.25rem] shadow-[0_25px_80px_-15px_rgba(15,23,42,0.08)] backdrop-blur-md transition-colors duration-300"
+      >
         <Navbar />
 
         <section className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div className="space-y-6">
-            <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+            <span className="inline-flex rounded-full border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50 dark:bg-emerald-950/60 px-3.5 py-1 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-300">
               About us
             </span>
             <div className="space-y-4">
-              <h1 className="max-w-2xl text-3xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-2xl text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
                 A gallery built to make photography feel premium and simple.
               </h1>
-              <p className="max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+              <p className="max-w-2xl text-base leading-7 text-slate-600 dark:text-slate-400 sm:text-lg">
                 Image Gallery is a clean showcase space for visual collections.
                 The goal is not clutter, but focus: strong imagery, intuitive
                 navigation, and a modern layout that works across every screen.
@@ -48,10 +57,10 @@ export default function AboutPage() {
               ].map(([value, label]) => (
                 <div
                   key={label}
-                  className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                  className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/80 p-4 shadow-sm"
                 >
-                  <p className="text-2xl font-black text-slate-950">{value}</p>
-                  <p className="mt-1 text-sm font-medium uppercase tracking-widest text-slate-500">
+                  <p className="text-2xl font-black text-slate-950 dark:text-white">{value}</p>
+                  <p className="mt-1 text-sm font-medium uppercase tracking-widest text-slate-500 dark:text-slate-400">
                     {label}
                   </p>
                 </div>
@@ -78,7 +87,9 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
-      </div>
+
+        <Footer />
+      </motion.div>
     </main>
   );
 }

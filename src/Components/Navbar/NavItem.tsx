@@ -1,35 +1,65 @@
-import Link from "next/link";
+"use client";
 
-interface NavItem {
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FaHome, FaInfoCircle, FaEnvelope } from "react-icons/fa";
+
+interface NavLinkItem {
   href: string;
   label: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
-const navItems: NavItem[] = [
+const navItems: NavLinkItem[] = [
+  {
+    href: "/",
+    label: "Explore",
+    icon: FaHome,
+  },
   {
     href: "/about",
     label: "About Us",
+    icon: FaInfoCircle,
   },
   {
     href: "/contact",
-    label: "Contact Us",
+    label: "Contact",
+    icon: FaEnvelope,
   },
 ];
 
+import { motion } from "framer-motion";
+
 const NavItem = ({ onNavigate }: { onNavigate?: () => void }) => {
+  const pathname = usePathname();
+
   return (
-    <ul className="flex flex-col md:flex-row md:items-center gap-2 lg:gap-4 list-none m-0 p-0">
-      {navItems.map((item) => (
-        <li key={item.label}>
-          <Link
-            href={item.href}
-            onClick={onNavigate}
-            className="block rounded px-3 py-2 md:px-3.5 md:py-2 lg:px-4 lg:py-2 text-base md:text-lg lg:text-xl font-bold uppercase tracking-wider transition-all duration-150 active:translate-y-0.5 hover:text-green-500 hover:underline whitespace-nowrap"
+    <ul className="flex flex-col md:flex-row md:items-center gap-1.5 md:gap-2 list-none m-0 p-0">
+      {navItems.map(({ href, label, icon: Icon }) => {
+        const isActive = pathname === href;
+        return (
+          <motion.li
+            key={label}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ duration: 0.15 }}
           >
-            {item.label}
-          </Link>
-        </li>
-      ))}
+            <Link
+              href={href}
+              onClick={onNavigate}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-colors duration-200 cursor-pointer ${
+                isActive
+                  ? "bg-slate-900 text-white shadow-sm dark:bg-white dark:text-slate-950"
+                  : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/70"
+              }`}
+            >
+              <Icon className="text-xs opacity-80" />
+              <span>{label}</span>
+            </Link>
+          </motion.li>
+        );
+      })}
     </ul>
   );
 };

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BiSave } from "react-icons/bi";
+import { FiBookmark } from "react-icons/fi";
 import { ImageInfo } from "../../types/index.d";
 
 const PhotoCard = ({ imageData }: { imageData: ImageInfo }) => {
@@ -31,7 +31,7 @@ const PhotoCard = ({ imageData }: { imageData: ImageInfo }) => {
           aria-label="Save photo"
           className="p-1.5 rounded-lg hover:bg-white/20 active:scale-95 transition-all shrink-0 cursor-pointer"
         >
-          <BiSave size={24} aria-hidden="true" />
+          <FiBookmark size={22} aria-hidden="true" />
         </button>
       </figcaption>
     </figure>
